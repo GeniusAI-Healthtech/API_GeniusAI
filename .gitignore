@@ -1,0 +1,75 @@
+# Bytecode Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambientes Virtuais
+venv/
+*.venv
+env/
+*.env
+ENV/
+
+# Instalações de desenvolvimento
+.Python
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Geralmente você não quer incluir o que PyInstaller gera.
+build/
+dist/
+*.spec
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Pytest
+.cache
+.pytest_cache/
+
+# Pyenv
+.python-version
+
+# pipenv
+.Pipfile.lock
+
+# SQLite banco de dados
+*.db
+*.sqlite3
+
+# Arquivos de configuração de ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Diretórios de IDEs e editores
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Arquivos de log
+*.log
+*.csv
+
+# Outros arquivos e diretórios
+.DS_Store
+Thumbs.db
+
+# Pasta de uploads (se aplicável)
+/uploads
