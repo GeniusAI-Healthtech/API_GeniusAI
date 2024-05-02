@@ -12,7 +12,13 @@ from ultralytics.utils.plotting import colors, Annotator
 
 # Inicializa os modelos
 # ecg-signal-detec
-# ecg-ialjy.pt
+# ecg-ialjy.pt 
+# best.pt
+# stenosis-uc0rf-yolo8.pt
+# ecg-v3.pt
+# ecg-lead-classification.pt
+# ecg_labeled_marzo.pt
+
 model_sample_model = YOLO("./AI/cardiac/ecg-signal-detec.pt")
 logger.info("Modelo carregado: {}", model_sample_model.model_name)
 
@@ -83,6 +89,8 @@ def get_model_predict(model: YOLO, input_image: Image, save: bool = False, image
         pd.DataFrame: Um DataFrame contendo as previsões.
     """
     # Faz as previsões
+    logger.info("Parâmetros de entrada para predict: image_size={}, conf={}, save={}, augment={}", image_size, conf, save, augment)
+
     predictions = model.predict(
                         imgsz=image_size, 
                         source=input_image, 
@@ -93,6 +101,8 @@ def get_model_predict(model: YOLO, input_image: Image, save: bool = False, image
                         fliplr= 0.0,
                         mosaic = 0.0,
                         )
+    
+    logger.info("Previsões brutas retornadas do modelo: {}", predictions)
     
     # Transforma as previsões em um dataframe do pandas
     predictions = transform_predict_to_df(predictions, model.model.names)
