@@ -1,4 +1,0 @@
-```
-  uvicorn main:app --reload
-
-```
