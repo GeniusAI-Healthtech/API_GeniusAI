@@ -1,7 +1,3 @@
-Aqui está a documentação atualizada com as correções e inclusões que você solicitou:
-
----
-
 # Documentação da API
 
 Esta documentação fornece informações essenciais para executar, entender e trabalhar com a API. Inclui instruções para iniciar o projeto, descrição da estrutura organizacional do código, configuração de logs e detalhes sobre formatação e verificação de estilo de código.
@@ -85,4 +81,3 @@ Para formatar o código automaticamente, incluindo a quebra de linhas longas.
 
 ---
 
-Esta documentação visa facilitar o entendimento e a colaboração no projeto, garantindo que todas as operações e estruturas sejam claramente compreendidas e facilmente acessíveis.
