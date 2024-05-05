@@ -7,3 +7,6 @@ loguru
 pytest
 pytest-cov
 #yolo==8.1.18
+
+black==24.4.2
+flake8==7.0.0
