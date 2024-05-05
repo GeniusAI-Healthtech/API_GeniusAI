@@ -1,10 +1,9 @@
+import json
 from fastapi import APIRouter, File, HTTPException
 from services.ai_services import detect_sample_model
-from utils.logger import get_logger
-import json
-
 from services.ai_services import detect_sample_model
 from services.image_processing import add_bboxs_on_img
+from utils.logger import get_logger
 from utils.image_utils import get_image_from_bytes
 from utils.image_utils import get_bytes_from_image
 from fastapi.responses import StreamingResponse
