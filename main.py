@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from controllers.detection_controller import router as detection_router
 from controllers.healthcheck_controller import router as healthcheck_router
+from controllers.gpt_controller import router as gpt_router
 
 
 ###################### FastAPI Setup #############################
@@ -57,3 +58,4 @@ async def redirect():
 
 app.include_router(detection_router, prefix="/analise")
 app.include_router(healthcheck_router)
+app.include_router(gpt_router)
