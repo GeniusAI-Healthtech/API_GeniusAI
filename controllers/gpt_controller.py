@@ -14,7 +14,7 @@ api_key = os.getenv("OPENAI_API_KEY")
 # Inicializa o cliente com a chave da API
 client = OpenAI(api_key=api_key)
 
-@router.post("/chat", tags=["ChatGPT"], summary="Converse com ChatGPT")
+@router.post("/chat", tags=["Chat Genius"], summary="Converse com Genius")
 async def chat_with_gpt(detection_results: dict):
     """
     Recebe um prompt de texto e retorna uma resposta do modelo GPT-4 Turbo.
@@ -36,7 +36,7 @@ async def chat_with_gpt(detection_results: dict):
         response = client.chat.completions.create(
             model="gpt-4-turbo-preview",
             messages=[
-                {"role": "system", "content": "Please output the response as a single, simple paragraph in Portuguese."},
+                {"role": "system", "content": "Output the response as a single, simple paragraph in Portuguese."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.5,  # Menor temperatura para maior coerência e precisão

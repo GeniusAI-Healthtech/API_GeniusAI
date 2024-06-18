@@ -67,7 +67,7 @@ async def complete_analysis(exam_type: str, file: bytes = File(...)):
         response = client.chat.completions.create(
             model="gpt-4-turbo-preview",
             messages=[
-                {"role": "system", "content": "Please output the response as a single, simple paragraph in Portuguese."},
+                {"role": "system", "content": "Output the response as a single, simple paragraph in Portuguese."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.5,
