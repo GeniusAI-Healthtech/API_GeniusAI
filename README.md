@@ -80,4 +80,3 @@ black path/to/your/file.py
 Para formatar o código automaticamente, incluindo a quebra de linhas longas.
 
 ---
-
