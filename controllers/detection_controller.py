@@ -180,3 +180,67 @@ async def img_object_detection_to_img(exam_type: str, files: List[UploadFile] = 
     except Exception as e:
         logger.error("Failed to annotate images with bounding boxes: %s", str(e))
         raise HTTPException(status_code=500, detail="Error annotating the images")
+
+@router.post(
+    "/{exam_type}/result_interpretation",
+    tags=["Analise"],
+    summary="Retorna apenas a interpretação clínica dos dados fornecidos.",
+)
+async def clinical_interpretation(exam_type: str, files: List[UploadFile] = File(...)):
+    """
+    Clinical Interpretation for multiple files.
+
+    Args:
+        exam_type (str): The type of exam being analyzed (ex: "ecg_signal").
+        files (List[UploadFile]): List of image files in bytes format.
+
+    Returns:
+        list: List of JSON objects containing the Clinical Interpretation for each file.
+    """
+    results = []
+    try:
+        for file in files:
+            # Converte o arquivo de imagem para um objeto de imagem
+            input_image = get_image_from_bytes(await file.read())
+
+            # Predição do modelo
+            predict = detect_sample_model(input_image, exam_type)
+
+            # Seleciona as informações de detecção de objetos
+            detect_res = predict[["name", "confidence"]]
+            detect_objects_json = json.loads(detect_res.to_json(orient="records"))
+
+            # Obtem a interpretação clínica do GPT
+            prompt = (
+                "Descreva em um único parágrafo simples a interpretação clínica dos dados fornecidos. "
+                "Faça isso em português. "
+                "O retorno deve ser um único parágrafo. "
+                "Dados: " + str(detect_objects_json)
+            )
+
+            response = client.chat.completions.create(
+                model="gpt-4-turbo-preview",
+                messages=[
+                    {"role": "system", "content": "Output the response as a single, simple paragraph in Portuguese."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.5,
+            )
+
+            message_content = response.choices[0].message.content
+            result = {
+                "exam_type": exam_type,
+                "clinical_interpretation": message_content
+            }
+
+            # Adiciona o resultado à lista de resultados
+            results.append(result)
+
+        # Log dos resultados e retorno
+        logger.info("results: %s", results)
+
+        return results
+
+    except Exception as e:
+        logger.error("Failed to process clinical interpretation: %s", str(e))
+        raise HTTPException(status_code=500, detail=f"Error processing the clinical interpretation: {str(e)}")
