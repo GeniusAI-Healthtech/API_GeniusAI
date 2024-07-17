@@ -1,25 +1,12 @@
 import json
-import base64
 from fastapi import APIRouter, File, HTTPException, UploadFile
-from fastapi.responses import StreamingResponse
+from typing import List
+from starlette.responses import JSONResponse
 from services.ai_services import detect_sample_model
 from services.image_processing import add_bboxs_on_img
 from utils.logger import get_logger
-from utils.image_utils import get_image_from_bytes, get_bytes_from_image
-from openai import OpenAI
-import os
-from dotenv import load_dotenv
-from typing import List
-from starlette.responses import JSONResponse
-
-# Carrega as variáveis de ambiente
-load_dotenv()
-
-# Recupera a chave da API de um arquivo .env
-api_key = os.getenv("OPENAI_API_KEY")
-
-# Inicializa o cliente com a chave da API
-client = OpenAI(api_key=api_key)
+from utils.uses_for_images import get_image_from_bytes, encode_image_to_base64
+from config import client
 
 router = APIRouter()
 logger = get_logger()
@@ -83,11 +70,8 @@ async def complete_analysis(exam_type: str, files: List[UploadFile] = File(...))
             # Adiciona as bounding boxes na imagem
             final_image = add_bboxs_on_img(image=input_image, predict=predict)
 
-            # Converte a imagem final para bytes
-            image_bytes = get_bytes_from_image(final_image)
-
             # Codifica a imagem em base64
-            image_base64 = base64.b64encode(image_bytes.getvalue()).decode("utf-8")
+            image_base64 = encode_image_to_base64(final_image)
             result["annotated_image"] = image_base64
 
             # Adiciona o resultado à lista de resultados
@@ -181,11 +165,9 @@ async def img_object_detection_to_img(exam_type: str, files: List[UploadFile] = 
                 # Adiciona as bounding boxes na imagem
                 final_image = add_bboxs_on_img(image=input_image, predict=predict)
 
-                # Converte a imagem final para bytes
-                image_bytes = get_bytes_from_image(final_image)
-
-                # Adiciona a imagem final à lista de resultados
-                result_images.append(base64.b64encode(image_bytes.getvalue()).decode("utf-8"))
+                # Codifica a imagem em base64
+                image_base64 = encode_image_to_base64(final_image)
+                result_images.append(image_base64)
 
             except Exception as file_error:
                 logger.error(f"Failed to process file {file.filename}: {str(file_error)}")
