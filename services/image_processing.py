@@ -2,7 +2,7 @@ from PIL import Image
 import pandas as pd
 import numpy as np
 from ultralytics.utils.plotting import colors, Annotator
-from utils.image_utils import get_image_from_bytes, get_bytes_from_image
+from utils.uses_for_images import get_image_from_bytes, get_bytes_from_image
 from utils.logger import get_logger
 from fastapi.exceptions import HTTPException
 

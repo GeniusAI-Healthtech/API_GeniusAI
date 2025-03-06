@@ -1,6 +1,8 @@
 from PIL import Image
 import io
 from loguru import logger
+import base64
+from typing import List
 
 
 def get_image_from_bytes(binary_image: bytes) -> Image:
@@ -33,3 +35,11 @@ def get_bytes_from_image(image: Image) -> bytes:
     )  # salva a imagem em formato JPEG com qualidade 85
     return_image.seek(0)  # define o ponteiro para o início do arquivo
     return return_image
+
+def encode_image_to_base64(image: Image) -> str:
+    image_bytes = get_bytes_from_image(image)
+    return base64.b64encode(image_bytes.getvalue()).decode("utf-8")
+
+def decode_base64_to_image(base64_str: str) -> Image:
+    image_bytes = base64.b64decode(base64_str)
+    return get_image_from_bytes(image_bytes)
