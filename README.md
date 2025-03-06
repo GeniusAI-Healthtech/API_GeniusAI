@@ -21,6 +21,9 @@ A organização do código está detalhada abaixo:
 │
 ├── main.py  # Arquivo principal que inicializa e configura o aplicativo FastAPI
 │        
+├── 📁 AI/  # Agrupa os modelos de IA por áreas.
+│   ├── 📁 cardiac
+│        
 ├── 📁 controllers/
 │   ├── detection_controller.py  # Controller para detecção de objetos
 │   └── healthcheck_controller.py  # Controller para healthcheck da API
@@ -30,7 +33,7 @@ A organização do código está detalhada abaixo:
 │   └── model_services.py  # Serviços relacionados ao gerenciamento de modelos
 │
 ├── 📁 models/
-│   └── image_models.py  # Modelos Pydantic para dados de imagens
+│   └── EX: Prisma  # Camada para manipulação e persistencia dos dados (Não Implementado)
 │
 ├── 📁 utils/
 │   ├── logger.py  # Utilitários para configuração de logging
